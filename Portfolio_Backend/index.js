@@ -12,11 +12,12 @@ app.use(express.json());
 
 // MySQL Connection
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'localhost',
+  host: process.env.DB_HOST || 'host.docker.internal',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || 'syam',
   database: 'portfolio'
 });
+
 
 db.connect((err) => {
   if (err) throw err;
@@ -73,4 +74,6 @@ app.post('/api/contact', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
+});
